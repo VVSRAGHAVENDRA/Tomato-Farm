@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tomato Diseases - Identification & Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #c62828;
+            --primary-light: #ff5252;
+            --primary-dark: #8e0000;
+            --secondary: #2e7d32;
+            --secondary-light: #60ad5e;
+            --accent: #ff8f00;
+            --accent-light: #ffc046;
+            --nav-btn: #ff7043;
+            --nav-btn-hover: #ff5722;
+            --text: #263238;
+            --text-light: #546e7a;
+            --background: #fff8e1;
+            --card-bg: #ffffff;
+            --white: #ffffff;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+            color: var(--accent-light);
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            display: inline-block;
+            background-color: var(--nav-btn);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(255, 112, 67, 0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition);
+        }
+        
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+        
+        .nav-btn:hover {
+            background-color: var(--nav-btn-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 112, 67, 0.4);
+        }
+        
+        .nav-btn i {
+            margin-right: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url('https://images.unsplash.com/photo-1592924357228-91a4daadcfea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            padding: 8rem 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeIn 1s ease;
+        }
+        
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 143, 0, 0.3);
+        }
+        
+        .btn:hover {
+            background-color: var(--accent-light);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 143, 0, 0.4);
+        }
+        
+        .section {
+            padding: 5rem 0;
+            position: relative;
+        }
+        
+        .section-bg-1 {
+            background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), 
+                        url('https://images.unsplash.com/photo-1574943320219-553eb213f72d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        
+        .section-bg-2 {
+            background: linear-gradient(rgba(255, 248, 225, 0.9), rgba(255, 248, 225, 0.9)), 
+                        url('https://images.unsplash.com/photo-159066b3d30d149d18c0ed6a8e4e6b3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            color: var(--primary);
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+        
+        .disease-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .disease-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .disease-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .disease-image {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .disease-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .disease-card:hover .disease-image img {
+            transform: scale(1.1);
+        }
+        
+        .disease-severity {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+            z-index: 2;
+        }
+        
+        .severity-high {
+            background-color: var(--primary);
+        }
+        
+        .severity-medium {
+            background-color: var(--accent);
+        }
+        
+        .severity-low {
+            background-color: var(--secondary);
+        }
+        
+        .disease-content {
+            padding: 2rem;
+        }
+        
+        .disease-content h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .disease-content h3 i {
+            color: var(--secondary);
+        }
+        
+        .disease-content .symptoms {
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 1.2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .disease-content .management {
+            margin-top: 1.5rem;
+        }
+        
+        .disease-content .management h4 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+        
+        .disease-content .management ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .disease-content .management li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .disease-content .management li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+        
+        .prevention-section {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border-radius: var(--radius);
+            padding: 3rem;
+            margin-top: 4rem;
+        }
+        
+        .prevention-section h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+        
+        .prevention-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .prevention-step {
+            background-color: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .prevention-step:hover {
+            transform: translateY(-5px);
+        }
+        
+        .prevention-step i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .prevention-step h4 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+        }
+        
+        /* Image Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            animation: zoomIn 0.3s ease;
+        }
+        
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .close:hover {
+            color: var(--accent-light);
+        }
+        
+        .modal-caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: white;
+            padding: 10px 0;
+            font-size: 1.2rem;
+        }
+        
+        footer {
+            background: linear-gradient(135deg, var(--primary-dark), #7a1c1c);
+            color: white;
+            padding: 4rem 0 1.5rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 12px;
+            font-size: 1.4rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+        
+        .footer-section p, .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section i {
+            margin-right: 10px;
+            color: var(--accent-light);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-section a:hover {
+            color: var(--accent-light);
+            padding-left: 5px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #bdbdbd;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            .nav-btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .hero {
+                padding: 5rem 0;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+            
+            .disease-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                max-width: 95%;
+            }
+            
+            .close {
+                top: 10px;
+                right: 20px;
+                font-size: 30px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .prevention-section {
+                padding: 2rem 1.5rem;
+            }
+            
+            .nav-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .nav-btn i {
+                margin-right: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-seedling"></i>
+                    <h1>Tomato Disease Guide</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#fungal" class="nav-btn"><i class="fas fa-fungus"></i> Fungal</a></li>
+                        <li><a href="#bacterial" class="nav-btn"><i class="fas fa-bacteria"></i> Bacterial</a></li>
+                        <li><a href="#viral" class="nav-btn"><i class="fas fa-virus"></i> Viral</a></li>
+                        <li><a href="#prevention" class="nav-btn"><i class="fas fa-shield-alt"></i> Prevention</a></li>
+                        <li><a href="#contact" class="nav-btn"><i class="fas fa-envelope"></i> Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Identify & Manage Tomato Diseases</h2>
+                <p>Comprehensive guide to common tomato diseases with identification tips and management strategies for healthy crops</p>
+                <a href="#fungal" class="btn">Explore Diseases <i class="fas fa-arrow-down"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="fungal" class="section section-bg-1">
+        <div class="container">
+            <div class="section-title">
+                <h2>Fungal Diseases</h2>
+                <p>Common fungal infections affecting tomato plants</p>
+            </div>
+            <div class="disease-container">
+                <div class="disease-card fade-in">
+                    <div class="disease-image" onclick="openModal('early-blight-modal')">
+                        <img src="https://eu-images.contentstack.com/v3/assets/bltdd43779342bd9107/blt979c2852133422ee/638f877c1b5ba778fb2f1680/0412W1-1440A-1540x800.jpg?width=1280&auto=webp&quality=80&disable=upscale" alt="Early Blight">
+                        <div class="disease-severity severity-high">High Severity</div>
+                    </div>
+                    <div class="disease-content">
+                        <h3><i class="fas fa-fungus"></i> Early Blight</h3>
+                        <p class="symptoms">Dark spots with concentric rings on leaves, stems, and fruits</p>
+                        <p>Caused by the fungus Alternaria solani, early blight appears as small, dark spots that enlarge to form concentric rings. Lower leaves are affected first.</p>
+                        <div class="management">
+                            <h4>Management Strategies:</h4>
+                            <ul>
+                                <li>Remove and destroy infected plant debris</li>
+                                <li>Apply copper-based fungicides</li>
+                                <li>Ensure proper spacing for air circulation</li>
+                                <li>Water at the base to keep foliage dry</li>
+                                <li>Use resistant tomato varieties</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="disease-card fade-in">
+                    <div class="disease-image" onclick="openModal('late-blight-modal')">
+                        <img src="https://www.rhs.org.uk/getmedia/2c8879ff-0b5e-40e7-b319-9f032e78451a/Tomato-blight-on-fruit-cluster.jpg" alt="Late Blight">
+                        <div class="disease-severity severity-high">High Severity</div>
+                    </div>
+                    <div class="disease-content">
+                        <h3><i class="fas fa-fungus"></i> Late Blight</h3>
+                        <p class="symptoms">Water-soaked lesions on leaves that turn brown, white mold growth</p>
+                        <p>Caused by Phytophthora infestans, late blight spreads rapidly in cool, wet conditions and can destroy entire crops within days.</p>
+                        <div class="management">
+                            <h4>Management Strategies:</h4>
+                            <ul>
+                                <li>Apply fungicides preventatively</li>
+                                <li>Avoid overhead irrigation</li>
+                                <li>Remove and destroy infected plants immediately</li>
+                                <li>Use certified disease-free seeds</li>
+                                <li>Practice crop rotation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="disease-card fade-in">
+                    <div class="disease-image" onclick="openModal('powdery-mildew-modal')">
+                        <img src="https://www.mofga.org/wp-content/uploads/2021/01/Powdery-Mildew-Tomato-400x267px.jpg" alt="Powdery Mildew">
+                        <div class="disease-severity severity-medium">Medium Severity</div>
+                    </div>
+                    <div class="disease-content">
+                        <h3><i class="fas fa-fungus"></i> Powdery Mildew</h3>
+                        <p class="symptoms">White, powdery spots on leaves and stems</p>
+                        <p>Caused by various fungal species, powdery mildew appears as white, talcum-powder-like spots that can cover leaves and reduce photosynthesis.</p>
+                        <div class="management">
+                            <h4>Management Strategies:</h4>
+                            <ul>
+                                <li>Apply sulfur-based fungicides</li>
+                                <li>Improve air circulation around plants</li>
+                                <li>Remove severely infected leaves</li>
+                                <li>Avoid overhead watering</li>
+                                <li>Use resistant varieties when available</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="bacterial" class="section section-bg-2">
+        <div class="container">
+            <div class="section-title">
+                <h2>Bacterial Diseases</h2>
+                <p>Bacterial infections that affect tomato plants</p>
+            </div>
+            <div class="disease-container">
+                <div class="disease-card fade-in">
+                    <div class="disease-image" onclick="openModal('bacterial-spot-modal')">
+                        <img src="https://cdn.mos.cms.futurecdn.net/644TAzdfcFQZT9kR5qFRVR.jpg" alt="Bacterial Spot">
+                        <div class="disease-severity severity-medium">Medium Severity</div>
+                    </div>
+                    <div class="disease-content">
+                        <h3><i class="fas fa-bacteria"></i> Bacterial Spot</h3>
+                        <p class="symptoms">Small, dark, scabby spots on fruits and leaves</p>
+                        <p>Caused by Xanthomonas species, bacterial spot appears as small, water-soaked spots that become dark and scabby, affecting both leaves and fruits.</p>
+                        <div class="management">
+                            <h4>Management Strategies:</h4>
+                            <ul>
+                                <li>Use copper-based bactericides</li>
+                                <li>Avoid working with plants when wet</li>
+                                <li>Use disease-free seeds and transplants</li>
+                                <li>Practice crop rotation</li>
+                                <li>Remove and destroy infected plants</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="disease-card fade-in">
+                    <div class="disease-image" onclick="openModal('bacterial-wilt-modal')">
+                        <img src="https://www.thepaintedhinge.com/wp-content/uploads/2025/08/Tomato-Wilt-Symptoms-How-To-Spot-and-Stop-the-Disease-1024x576.png" alt="Bacterial Wilt">
+                        <div class="disease-severity severity-high">High Severity</div>
+                    </div>
+                    <div class="disease-content">
+                        <h3><i class="fas fa-bacteria"></i> Bacterial Wilt</h3>
+                        <p class="symptoms">Sudden wilting of plants without yellowing</p>
+                        <p>Caused by Ralstonia solanacearum, bacterial wilt causes rapid wilting of the entire plant without leaf yellowing. The vascular system becomes brown.</p>
+                        <div class="management">
+                            <h4>Management Strategies:</h4>
+                            <ul>
+                                <li>Use resistant varieties</li>
+                                <li>Practice long-term crop rotation</li>
+                                <li>Solarize soil before planting</li>
+                                <li>Avoid planting in infected soil</li>
+                                <li>Remove and destroy infected plants</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="viral" class="section section-bg-1">
+        <div class="container">
+            <div class="section-title">
+                <h2>Viral Diseases</h2>
+                <p>Viral infections transmitted by insects</p>
+            </div>
+            <div class="disease-container">
+                <div class="disease-card fade-in">
+                    <div class="disease-image" onclick="openModal('mosaic-virus-modal')">
+                        <img src="https://envirevoagritech.com/wp-content/uploads/2024/08/Mosaic_Viruses_4f4ea2679c.jpg" alt="Tomato Mosaic Virus">
+                        <div class="disease-severity severity-medium">Medium Severity</div>
+                    </div>
+                    <div class="disease-content">
+                        <h3><i class="fas fa-virus"></i> Tomato Mosaic Virus</h3>
+                        <p class="symptoms">Mottled light and dark green areas on leaves</p>
+                        <p>This virus causes mosaic patterns on leaves, leaf distortion, and stunted growth. It can be spread through contaminated tools, hands, or insects.</p>
+                        <div class="management">
+                            <h4>Management Strategies:</h4>
+                            <ul>
+                                <li>Use virus-resistant varieties</li>
+                                <li>Control aphid populations</li>
+                                <li>Disinfect tools between plants</li>
+                                <li>Remove and destroy infected plants</li>
+                                <li>Wash hands after handling infected plants</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="disease-card fade-in">
+                    <div class="disease-image" onclick="openModal('yellow-leaf-curl-modal')">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEmCjSK_6Ts4l3C0ww0uWEAmvZ8ggUUKIxIQ&s" alt="Tomato Yellow Leaf Curl">
+                        <div class="disease-severity severity-high">High Severity</div>
+                    </div>
+                    <div class="disease-content">
+                        <h3><i class="fas fa-virus"></i> Tomato Yellow Leaf Curl</h3>
+                        <p class="symptoms">Upward curling of leaves, yellowing, stunted growth</p>
+                        <p>Transmitted by whiteflies, this virus causes severe stunting, leaf curling, and yellowing. Fruits are small and poorly developed.</p>
+                        <div class="management">
+                            <h4>Management Strategies:</h4>
+                            <ul>
+                                <li>Control whitefly populations</li>
+                                <li>Use resistant varieties</li>
+                                <li>Remove infected plants immediately</li>
+                                <li>Use reflective mulches to deter whiteflies</li>
+                                <li>Practice good weed control</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="prevention" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Disease Prevention</h2>
+                <p>Proactive measures to keep your tomato plants healthy</p>
+            </div>
+            <div class="prevention-section">
+                <h3>Essential Prevention Practices</h3>
+                <div class="prevention-steps">
+                    <div class="prevention-step">
+                        <i class="fas fa-seedling"></i>
+                        <h4>Use Resistant Varieties</h4>
+                        <p>Select tomato varieties with natural resistance to common diseases in your area.</p>
+                    </div>
+                    <div class="prevention-step">
+                        <i class="fas fa-sync-alt"></i>
+                        <h4>Crop Rotation</h4>
+                        <p>Rotate tomatoes with non-solanaceous crops to break disease cycles.</p>
+                    </div>
+                    <div class="prevention-step">
+                        <i class="fas fa-tint"></i>
+                        <h4>Proper Watering</h4>
+                        <p>Water at the base of plants to keep foliage dry and prevent fungal growth.</p>
+                    </div>
+                    <div class="prevention-step">
+                        <i class="fas fa-wind"></i>
+                        <h4>Good Air Circulation</h4>
+                        <p>Space plants properly and prune to improve airflow and reduce humidity.</p>
+                    </div>
+                    <div class="prevention-step">
+                        <i class="fas fa-bug"></i>
+                        <h4>Pest Control</h4>
+                        <p>Manage insect populations that can spread viral diseases.</p>
+                    </div>
+                    <div class="prevention-step">
+                        <i class="fas fa-spray-can"></i>
+                        <h4>Sanitation</h4>
+                        <p>Clean tools, remove plant debris, and disinfect between seasons.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Modals -->
+    <div id="early-blight-modal" class="modal" onclick="closeModal()">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" src="https://www.rhs.org.uk/getmedia/2c8879ff-0b5e-40e7-b319-9f032e78451a/Tomato-blight-on-fruit-cluster.jpg" alt="Early Blight">
+        <div class="modal-caption">Early Blight - Dark spots with concentric rings on tomato leaves</div>
+    </div>
+
+    <div id="late-blight-modal" class="modal" onclick="closeModal()">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" src="https://www.rhs.org.uk/getmedia/2c8879ff-0b5e-40e7-b319-9f032e78451a/Tomato-blight-on-fruit-cluster.jpg" alt="Late Blight">
+        <div class="modal-caption">Late Blight - Water-soaked lesions on tomato leaves</div>
+    </div>
+
+    <div id="powdery-mildew-modal" class="modal" onclick="closeModal()">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" src="https://www.gardeningknowhow.com/wp-content/uploads/2017/05/powdery-mildew-on-tomatoes.jpg" alt="Powdery Mildew">
+        <div class="modal-caption">Powdery Mildew - White, powdery spots on tomato leaves</div>
+    </div>
+
+    <div id="bacterial-spot-modal" class="modal" onclick="closeModal()">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" src="https://cdn.mos.cms.futurecdn.net/644TAzdfcFQZT9kR5qFRVR.jpg" alt="Bacterial Spot">
+        <div class="modal-caption">Bacterial Spot - Small, dark, scabby spots on tomato fruits</div>
+    </div>
+
+    <div id="bacterial-wilt-modal" class="modal" onclick="closeModal()">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" src="https://www.thepaintedhinge.com/wp-content/uploads/2025/08/Tomato-Wilt-Symptoms-How-To-Spot-and-Stop-the-Disease-1024x576.png" alt="Bacterial Wilt">
+        <div class="modal-caption">Bacterial Wilt - Sudden wilting of tomato plants without yellowing</div>
+    </div>
+
+    <div id="mosaic-virus-modal" class="modal" onclick="closeModal()">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" src="https://envirevoagritech.com/wp-content/uploads/2024/08/Mosaic_Viruses_4f4ea2679c.jpg" alt="Tomato Mosaic Virus">
+        <div class="modal-caption">Tomato Mosaic Virus - Mottled light and dark green areas on leaves</div>
+    </div>
+
+    <div id="yellow-leaf-curl-modal" class="modal" onclick="closeModal()">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEmCjSK_6Ts4l3C0ww0uWEAmvZ8ggUUKIxIQ&s" alt="Tomato Yellow Leaf Curl">
+        <div class="modal-caption">Tomato Yellow Leaf Curl - Upward curling of leaves with yellowing</div>
+    </div>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About This Guide</h3>
+                    <p>Comprehensive resource for identifying and managing common tomato diseases. Created to help farmers and gardeners maintain healthy tomato crops.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#fungal">Fungal Diseases</a></li>
+                        <li><a href="#bacterial">Bacterial Diseases</a></li>
+                        <li><a href="#viral">Viral Diseases</a></li>
+                        <li><a href="#prevention">Prevention Tips</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">

@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Nutrient Management in Tomato Cultivation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header and Navigation */
+        header {
+            background-color: #2c5e1a;
+            color: white;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #ffcc00;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+            position: relative;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: block;
+        }
+
+        nav ul li a:hover {
+            color: #ffcc00;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Dropdown Menu */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 5px;
+            overflow: hidden;
+            top: 100%;
+            left: 0;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #2c5e1a;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Hero Section with Background Image */
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1592924357228-91a4daadcfea?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #ffcc00;
+            color: #2c5e1a;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #e6b800;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Main Content Sections */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: #2c5e1a;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 3px;
+            background-color: #ffcc00;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: #666;
+        }
+
+        /* Problem Section */
+        .problem {
+            background-color: white;
+        }
+
+        .problem-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .problem-text {
+            flex: 1;
+            min-width: 300px;
+            padding-right: 30px;
+        }
+
+        .problem-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .problem-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .problem-list {
+            margin-top: 20px;
+        }
+
+        .problem-list li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .problem-list li::before {
+            content: '•';
+            color: #ffcc00;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Solutions Section */
+        .solutions {
+            background-color: #f9f9f9;
+        }
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .solution-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .solution-icon {
+            background-color: #2c5e1a;
+            color: white;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .solution-content {
+            padding: 25px;
+        }
+
+        .solution-content h3 {
+            color: #2c5e1a;
+            margin-bottom: 15px;
+        }
+
+        /* Prototype Section */
+        .prototype {
+            background-color: white;
+        }
+
+        .prototype-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .prototype-text {
+            flex: 1;
+            min-width: 300px;
+            padding-right: 30px;
+        }
+
+        .prototype-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .prototype-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .features-list {
+            margin-top: 20px;
+        }
+
+        .features-list li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            color: #2c5e1a;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Nutrient Calculator Section */
+        .calculator {
+            background-color: #f9f9f9;
+        }
+
+        .calculator-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2c5e1a;
+        }
+
+        .form-group select, .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .results h3 {
+            color: #2c5e1a;
+            margin-bottom: 15px;
+        }
+
+        .result-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            border-left: 4px solid #2c5e1a;
+        }
+
+        /* Disease Section */
+        .disease {
+            background-color: white;
+        }
+
+        .disease-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .disease-card {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .disease-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .disease-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .disease-card:hover .disease-image img {
+            transform: scale(1.1);
+        }
+
+        .disease-content {
+            padding: 20px;
+        }
+
+        .disease-content h3 {
+            color: #2c5e1a;
+            margin-bottom: 10px;
+        }
+
+        .disease-content p {
+            margin-bottom: 15px;
+            color: #666;
+        }
+
+        /* Organic Farming Section */
+        .organic {
+            background-color: #f9f9f9;
+        }
+
+        .organic-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .organic-text {
+            flex: 1;
+            min-width: 300px;
+            padding-right: 30px;
+        }
+
+        .organic-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .organic-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .organic-list {
+            margin-top: 20px;
+        }
+
+        .organic-list li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .organic-list li::before {
+            content: '🌱';
+            position: absolute;
+            left: 0;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2c5e1a;
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 2px;
+            background-color: #ffcc00;
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-column p, .footer-column a {
+            color: #ccc;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: #ffcc00;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+            }
+
+            nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin-left: 10px;
+                margin-right: 10px;
+                margin-bottom: 10px;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .problem-content, .prototype-content, .organic-content {
+                flex-direction: column;
+            }
+
+            .problem-text, .prototype-text, .organic-text {
+                padding-right: 0;
+                margin-bottom: 30px;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header and Navigation -->
+    <header>
+        <div class="container nav-container">
+            <div class="logo">Smart<span>Nutrient</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#problem">Problem</a></li>
+                    <li><a href="#solutions">Solutions</a></li>
+                    <li class="dropdown">
+                        <a href="#calculator">Nutrient Calculator</a>
+                        <div class="dropdown-content">
+                            <a href="npk.html">NPK Calculator</a>
+                            <a href="micro.html">Micro-nutrients</a>
+                            <a href="cal.html">Soil Testing</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#disease">Disease</a>
+                        <div class="dropdown-content">
+                            <a href="hello.html">Common Diseases</a>
+                            
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#organic">Organic Farming</a>
+                        <div class="dropdown-content">
+                            <a href="method.html">Methods</a>
+                            <a href="benefits.html">Benefits</a>
+                            <a href="guide.html">Transition Guide</a>
+                        </div>
+                    </li>
+                    <li><a href="#prototype">Prototype</a></li>
+                    <li><a href="#" class="btn">Get Started</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section with Background Image -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Smart Nutrient Management in Tomato Cultivation</h1>
+            <p>Optimizing fertilizer use for better yield, soil health, and cost efficiency</p>
+            <a href="#calculator" class="btn">Try Nutrient Calculator</a>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem" class="problem">
+        <div class="container">
+            <div class="section-title">
+                <h2>Core Issue</h2>
+                <p>Tomato plants need the right type and amount of fertilizer, depending on the growth stage, soil type, and variety.</p>
+            </div>
+            <div class="problem-content">
+                <div class="problem-text">
+                    <p>Most farmers follow a one-size-fits-all method, leading to overuse or underuse of fertilizers, reduced yield, soil degradation, and increased farming costs.</p>
+                    <h3>Causes of the Problem:</h3>
+                    <ul class="problem-list">
+                        <li>Lack of awareness of hybrid vs. determinate nutrient needs</li>
+                        <li>Same fertilizer applied for all varieties and stages</li>
+                        <li>Frequent irrigation after fertigation causes nutrient leaching</li>
+                        <li>Ignorance of essential micro-nutrients (Zn, B, Fe)</li>
+                        <li>Soil fertility decline due to continuous misuse</li>
+                        <li>Excess fertilizer leading to wasted costs</li>
+                        <li>Reduced fruit size, yield, and quality</li>
+                    </ul>
+                </div>
+                <div class="problem-image">
+                    <img src="https://cdn.mos.cms.futurecdn.net/WaZM7X6HxT5pEZQThL9TLE.jpg" alt="Tomato cultivation problem">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section id="solutions" class="solutions">
+        <div class="container">
+            <div class="section-title">
+                <h2>Prevention & Corrective Measures</h2>
+                <p>Implementing smart agricultural practices for sustainable tomato cultivation</p>
+            </div>
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <div class="solution-icon">🌱</div>
+                    <div class="solution-content">
+                        <h3>Soil Testing</h3>
+                        <p>Conduct soil testing before fertilizer application to understand nutrient requirements.</p>
+                    </div>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">📊</div>
+                    <div class="solution-content">
+                        <h3>Variety-Specific Schedules</h3>
+                        <p>Use variety-specific nutrient schedules: Hybrid (200:250:250 NPK kg/acre), Determinate (60:24:24 NPK kg/acre).</p>
+                    </div>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">⏱️</div>
+                    <div class="solution-content">
+                        <h3>Growth Stage Application</h3>
+                        <p>Split nutrient application by growth stage (Vegetative: N-rich, Flowering: Balanced, Fruiting: Potassium-heavy).</p>
+                    </div>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">🔬</div>
+                    <div class="solution-content">
+                        <h3>Micro-nutrients</h3>
+                        <p>Apply micro-nutrients (Zn, B, Fe) every 30 days to ensure plant health.</p>
+                    </div>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">💧</div>
+                    <div class="solution-content">
+                        <h3>Irrigation Management</h3>
+                        <p>Avoid irrigation immediately after fertigation to prevent nutrient leaching.</p>
+                    </div>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">👨‍🌾</div>
+                    <div class="solution-content">
+                        <h3>Farmer Education</h3>
+                        <p>Educate farmers using local training and awareness programs for sustainable practices.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nutrient Calculator Section -->
+    <section id="calculator" class="calculator">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nutrient Calculator</h2>
+                <p>Calculate the optimal fertilizer requirements for your tomato crop</p>
+            </div>
+            <div class="calculator-container">
+                <form id="nutrientForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="variety">Tomato Variety</label>
+                            <select id="variety" required>
+                                <option value="">Select Variety</option>
+                                <option value="hybrid">Hybrid</option>
+                                <option value="determinate">Determinate</option>
+                                <option value="indeterminate">Indeterminate</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="acreage">Acreage (acres)</label>
+                            <input type="number" id="acreage" min="0.1" step="0.1" placeholder="e.g., 2.5" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="growthStage">Growth Stage</label>
+                            <select id="growthStage" required>
+                                <option value="">Select Growth Stage</option>
+                                <option value="vegetative">Vegetative</option>
+                                <option value="flowering">Flowering</option>
+                                <option value="fruiting">Fruiting</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="soilType">Soil Type</label>
+                            <select id="soilType" required>
+                                <option value="">Select Soil Type</option>
+                                <option value="sandy">Sandy</option>
+                                <option value="loamy">Loamy</option>
+                                <option value="clay">Clay</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Calculate Nutrient Requirements</button>
+                </form>
+                <div class="results" id="results">
+                    <h3>Recommended Nutrient Application</h3>
+                    <div class="result-item">
+                        <strong>Nitrogen (N):</strong> <span id="nitrogen">-</span> kg/acre
+                    </div>
+                    <div class="result-item">
+                        <strong>Phosphorus (P):</strong> <span id="phosphorus">-</span> kg/acre
+                    </div>
+                    <div class="result-item">
+                        <strong>Potassium (K):</strong> <span id="potassium">-</span> kg/acre
+                    </div>
+                    <div class="result-item">
+                        <strong>Micro-nutrients:</strong> <span id="micronutrients">-</span>
+                    </div>
+                    <div class="result-item">
+                        <strong>Application Schedule:</strong> <span id="schedule">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Disease Section -->
+    <section id="disease" class="disease">
+        <div class="container">
+            <div class="section-title">
+                <h2>Common Tomato Diseases</h2>
+                <p>Identification, prevention, and treatment of common tomato diseases</p>
+            </div>
+            <div class="disease-grid">
+                <div class="disease-card">
+                    <div class="disease-image">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZGNjcd7fvK1tkuOteD8sQw0An1Q0QMP7tuw&s" alt="Early Blight">
+                    </div>
+                    <div class="disease-content">
+                        <h3>Early Blight</h3>
+                        <p>Characterized by dark spots with concentric rings on leaves, stems, and fruits.</p>
+                        <p><strong>Prevention:</strong> Crop rotation, proper spacing, fungicide application.</p>
+                    </div>
+                </div>
+                <div class="disease-card">
+                    <div class="disease-image">
+                        <img src="https://cdn.mos.cms.futurecdn.net/vJY6H98prSUY52u42tbaLT.jpg" alt="Late Blight">
+                    </div>
+                    <div class="disease-content">
+                        <h3>Late Blight</h3>
+                        <p>Water-soaked lesions on leaves that turn brown, with white fungal growth.</p>
+                        <p><strong>Prevention:</strong> Avoid overhead irrigation, use resistant varieties.</p>
+                    </div>
+                </div>
+                <div class="disease-card">
+                    <div class="disease-image">
+                        <img src="data:image/jpeg;base64,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" alt="Blossom End Rot">
+                    </div>
+                    <div class="disease-content">
+                        <h3>Blossom End Rot</h3>
+                        <p>Dark, sunken spots on the bottom of fruits due to calcium deficiency.</p>
+                        <p><strong>Prevention:</strong> Consistent watering, calcium supplements.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Organic Farming Section -->
+    <section id="organic" class="organic">
+        <div class="container">
+            <div class="section-title">
+                <h2>Organic Farming Practices</h2>
+                <p>Sustainable methods for healthy tomato cultivation</p>
+            </div>
+            <div class="organic-content">
+                <div class="organic-text">
+                    <p>Organic tomato farming focuses on building healthy soil and using natural methods to control pests and diseases, resulting in healthier plants and more nutritious produce.</p>
+                    <h3>Key Organic Practices:</h3>
+                    <ul class="organic-list">
+                        <li><strong>Composting:</strong> Using organic waste to create nutrient-rich compost</li>
+                        <li><strong>Cover Cropping:</strong> Planting cover crops to improve soil structure and fertility</li>
+                        <li><strong>Crop Rotation:</strong> Rotating tomatoes with other crops to prevent disease buildup</li>
+                        <li><strong>Natural Pest Control:</strong> Using beneficial insects and natural repellents</li>
+                        <li><strong>Organic Fertilizers:</strong> Using manure, bone meal, and other natural nutrient sources</li>
+                        <li><strong>Water Conservation:</strong> Implementing drip irrigation and mulching techniques</li>
+                    </ul>
+                    <a href="#" class="btn" style="margin-top: 20px;">Learn More About Organic Farming</a>
+                </div>
+                <div class="organic-image">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMlqvw-fCEhgnWjzAIxpffGEjfnJcaNX-cwQ&s" alt="Organic Farming">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prototype Section -->
+    <section id="prototype" class="prototype">
+        <div class="container">
+            <div class="section-title">
+                <h2>Proposed Prototype: Smart Nutrient Advisor</h2>
+                <p>A mobile/web application to guide farmers with accurate fertilizer recommendations</p>
+            </div>
+            <div class="prototype-content">
+                <div class="prototype-text">
+                    <p>The Smart Nutrient Advisor is designed to provide farmers with precise fertilizer recommendations based on their specific conditions.</p>
+                    <h3>Key Features:</h3>
+                    <ul class="features-list">
+                        <li><strong>Farmer Inputs:</strong> Variety, Acreage, Growth Stage, Irrigation Method</li>
+                        <li><strong>System Output:</strong> Recommended NPK values, micro-nutrient schedule, irrigation guidance, cost estimates</li>
+                        <li><strong>Add-ons:</strong> Notifications, soil health tips, future AI-based yield prediction</li>
+                    </ul>
+                    <a href="#" class="btn" style="margin-top: 20px;">Try the Prototype</a>
+                </div>
+                <div class="prototype-image">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Smart Nutrient Advisor prototype">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Smart Nutrient Management</h3>
+                    <p>Optimizing fertilizer use for better yield, soil health, and cost efficiency in tomato cultivation.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <a href="#problem">Problem Statement</a>
+                    <a href="#solutions">Solutions</a>
+                    <a href="#calculator">Nutrient Calculator</a>
+                    <a href="hello.html">Disease Management</a>
+                    <a href="#organic">Organic Farming</a>
+                    <a href="#prototype">Prototype</a>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Information</h3>
+                    <p>Stakeholder: Dr. Agnuru Srinivasulu</p>
+                    <p>Scientist – Horticulture</p>
+                    <p>Acharya N.G. Ranga Agricultural University (ANGRAU)</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Smart Nutrient Management. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Nutrient Calculator Functionality
+        document.getElementById('nutrientForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const variety = document.getElementById('variety').value;
+            const acreage = parseFloat(document.getElementById('acreage').value);
+            const growthStage = document.getElementById('growthStage').value;
+            const soilType = document.getElementById('soilType').value;
+            
+            // Calculate nutrient requirements based on inputs
+            let nitrogen, phosphorus, potassium, micronutrients, schedule;
+            
+            // Base values per acre
+            if (variety === 'hybrid') {
+                nitrogen = 200 * acreage;
+                phosphorus = 250 * acreage;
+                potassium = 250 * acreage;
+            } else if (variety === 'determinate') {
+                nitrogen = 60 * acreage;
+                phosphorus = 24 * acreage;
+                potassium = 24 * acreage;
+            } else {
+                // Default for indeterminate
+                nitrogen = 100 * acreage;
+                phosphorus = 80 * acreage;
+                potassium = 120 * acreage;
+            }
+            
+            // Adjust based on growth stage
+            if (growthStage === 'vegetative') {
+                nitrogen *= 1.2;
+                phosphorus *= 0.8;
+                potassium *= 0.8;
+                schedule = "Apply in 3 split doses - 50% at planting, 25% at 3 weeks, 25% at 6 weeks";
+            } else if (growthStage === 'flowering') {
+                nitrogen *= 1.0;
+                phosphorus *= 1.2;
+                potassium *= 1.0;
+                schedule = "Apply in 2 split doses - 60% at flowering initiation, 40% at full bloom";
+            } else if (growthStage === 'fruiting') {
+                nitrogen *= 0.8;
+                phosphorus *= 1.0;
+                potassium *= 1.5;
+                schedule = "Apply in 2 split doses - 50% at fruit set, 50% at fruit development";
+            }
+            
+            // Adjust based on soil type
+            if (soilType === 'sandy') {
+                nitrogen *= 1.1; // More nitrogen for sandy soils
+                schedule += ". For sandy soil, split applications into more frequent, smaller doses.";
+            } else if (soilType === 'clay') {
+                phosphorus *= 1.2; // More phosphorus for clay soils
+                schedule += ". For clay soil, ensure proper drainage to prevent waterlogging.";
+            }
+            
+            // Set micronutrient recommendations
+            micronutrients = "Apply Zinc (Zn) 2kg/acre, Boron (B) 1kg/acre, Iron (Fe) 5kg/acre every 30 days";
+            
+            // Display results
+            document.getElementById('nitrogen').textContent = nitrogen.toFixed(1);
+            document.getElementById('phosphorus').textContent = phosphorus.toFixed(1);
+            document.getElementById('potassium').textContent = potassium.toFixed(1);
+            document.getElementById('micronutrients').textContent = micronutrients;
+            document.getElementById('schedule').textContent = schedule;
+            
+            // Show results section
+            document.getElementById('results').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

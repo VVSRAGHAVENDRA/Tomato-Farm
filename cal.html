@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tomato Soil Testing Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1592924357228-91a4daadcfea?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: #ff6b6b;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .soil-testing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .soil-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .soil-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .soil-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .soil-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .soil-card:hover .soil-image img {
+            transform: scale(1.1);
+        }
+
+        .soil-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .soil-content h3 {
+            color: #2c5e1a;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .soil-content p {
+            color: #555;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .soil-details {
+            background: #f0f7ed;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .soil-details h4 {
+            color: #2c5e1a;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .soil-details ul {
+            padding-left: 20px;
+            color: #555;
+        }
+
+        .soil-details li {
+            margin-bottom: 5px;
+        }
+
+        .optimal {
+            color: #2c5e1a;
+            font-weight: 600;
+        }
+
+        .low {
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+
+        .high {
+            color: #ff9800;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: white;
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .soil-testing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-seedling"></i> Tomato Soil Testing Guide</h1>
+            <p>Four essential soil parameters for optimal tomato growth and yield</p>
+        </header>
+
+        <div class="soil-testing-grid">
+            <!-- Soil pH Card -->
+            <div class="soil-card">
+                <div class="soil-image">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKbJDG-jZzuY_Yjb9HbO4zbxOGOJAlgnxFdw&s" alt="Soil pH Testing">
+                </div>
+                <div class="soil-content">
+                    <h3>Soil pH Level</h3>
+                    <p>pH measures soil acidity or alkalinity, affecting nutrient availability for tomatoes.</p>
+                    <div class="soil-details">
+                        <h4><i class="fas fa-vial"></i> Testing & Recommendations</h4>
+                        <ul>
+                            <li><span class="optimal">Optimal Range: 6.0 - 6.8</span></li>
+                            <li>Test with pH meter or test kit</li>
+                            <li>If pH < 6.0: Add agricultural lime</li>
+                            <li>If pH > 6.8: Add sulfur or peat moss</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nitrogen Card -->
+            <div class="soil-card">
+                <div class="soil-image">
+                    <img src="https://bonnieplants.com/cdn/shop/articles/BONNIE_tomatoes_iStock-481349128-1800px_d5820803-320c-401d-a55c-92df3c204962.jpg?v=1753293158" alt="Nitrogen Testing">
+                </div>
+                <div class="soil-content">
+                    <h3>Nitrogen (N) Content</h3>
+                    <p>Essential for leaf and stem growth. Affects plant vigor and green color.</p>
+                    <div class="soil-details">
+                        <h4><i class="fas fa-leaf"></i> Testing & Recommendations</h4>
+                        <ul>
+                            <li><span class="optimal">Optimal Range: 20-40 ppm</span></li>
+                            <li>Test with soil test kit or lab</li>
+                            <li>If <span class="low">low</span>: Apply compost or blood meal</li>
+                            <li>If <span class="high">high</span>: Reduce nitrogen fertilizers</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phosphorus Card -->
+            <div class="soil-card">
+                <div class="soil-image">
+                    <img src="https://www.epicgardening.com/wp-content/uploads/2025/07/A-close-up-shot-of-several-fruits-and-foliage-lacking-in-essential-microelements-showcasing-tomato-nutrient-deficiency.jpg" alt="Phosphorus Testing">
+                </div>
+                <div class="soil-content">
+                    <h3>Phosphorus (P) Content</h3>
+                    <p>Crucial for root development, flowering, and fruit production in tomatoes.</p>
+                    <div class="soil-details">
+                        <h4><i class="fas fa-seedling"></i> Testing & Recommendations</h4>
+                        <ul>
+                            <li><span class="optimal">Optimal Range: 30-50 ppm</span></li>
+                            <li>Test with phosphorus test kit</li>
+                            <li>If <span class="low">low</span>: Add bone meal or rock phosphate</li>
+                            <li>If <span class="high">high</span>: Avoid phosphorus fertilizers</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Potassium Card -->
+            <div class="soil-card">
+                <div class="soil-image">
+                    <img src="https://www.harrisseeds.com/cdn/shop/files/00852.jpg?v=1739924182" alt="Potassium Testing">
+                </div>
+                <div class="soil-content">
+                    <h3>Potassium (K) Content</h3>
+                    <p>Important for fruit quality, disease resistance, and water regulation.</p>
+                    <div class="soil-details">
+                        <h4><i class="fas fa-apple-alt"></i> Testing & Recommendations</h4>
+                        <ul>
+                            <li><span class="optimal">Optimal Range: 150-250 ppm</span></li>
+                            <li>Test with potassium test kit</li>
+                            <li>If <span class="low">low</span>: Add wood ash or potash</li>
+                            <li>If <span class="high">high</span>: Reduce potassium fertilizers</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Tomato Soil Testing Guide &copy; 2023 | For Optimal Tomato Production</p>
+            <p>Test your soil regularly for best results</p>
+        </footer>
+    </div>
+</body>
+</html>
